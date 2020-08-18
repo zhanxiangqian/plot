@@ -49,6 +49,7 @@
 #include <QWidget>
 #include <QPainter>
 #include <QTimer>
+#include "export.h"
 /* I had to add these in order to link against qt5 rather than qt4 */
 #if QT_VERSION >= 0x050000
 #include <QtWidgets>
@@ -61,7 +62,7 @@ class QGraphicsView;
 class QSettings;
 class QLabel;
 
-class QtGnuplotWidget : public QWidget, public QtGnuplotEventReceiver
+class PLOTVIEW_EXPORT QtGnuplotWidget : public QWidget, public QtGnuplotEventReceiver
 {
 Q_OBJECT
 
@@ -80,7 +81,6 @@ public:
 	void setStatusText(const QString& status);
 	QSize plotAreaSize() const;
 	virtual QSize sizeHint() const;
-
 signals:
 	void plotDone();
 	void statusTextChanged(const QString& status);

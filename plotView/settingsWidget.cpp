@@ -2,6 +2,10 @@
 #include "QtGnuplotInstance.h"
 #include "QtGnuplotWidget.h"
 #include <QFileDialog>
+#include <QByteArray>
+#include <QMutex>
+//QStringList g_Commands;
+//QMutex	    g_Mutex;
 
 SettingsWidget::SettingsWidget(QWidget* parent) : QWidget(parent)
 {
@@ -42,19 +46,40 @@ void SettingsWidget::onOpen()
 		file.close();
 		break;
 	}
+	m_plotDone = false;
 }
+
+void SettingsWidget::setPlotWidget(QtGnuplotWidget* target)
+{
+	m_target = target;
+	connect(m_target, &QtGnuplotWidget::plotDone, this, &SettingsWidget::onPlotDone);
+}
+
 
 void SettingsWidget::onPlot()
 {
+	//m_plotDone = false;
 	QtGnuplotInstance& gp = (*QtGnuplotInstance::getInstance(""));
 	QString plotCommand;
-	plotCommand += "clear\n";
 	plotCommand += "set datafile separator \",\"\n";
 	//QString plotCommand;
 	plotCommand += QString("plot \"%1\" using \"%2\":\"%3\" with %4\n").arg(m_fileName).arg(m_xAxisName).arg(m_yAxisName).arg(m_lineType);
-	gp << plotCommand;
-	emit plotAction();
+	gp << plotCommand.toLocal8Bit();
+	Q_EMIT plotAction();
 }
+
+void SettingsWidget::onPlotDone()
+{
+	if (!m_plotDone)
+	{
+		//m_target->activateWindow();
+		//m_target->raise();
+		//m_target->resize(m_target->size());
+		m_plotDone = true;
+		//qDebug() << "plotDone";
+	}
+}
+
 
 void SettingsWidget::onLineTypeChanged(const QString& type)
 {
@@ -71,3 +96,20 @@ void SettingsWidget::onYAxisChanged(const QString& yAxis)
 {
 	m_yAxisName = yAxis;
 }
+
+/*void WorkerThread::run()  
+{
+	while (1)
+	{
+		if (g_Commands.count())
+		{
+			QtGnuplotInstance& gp = (*QtGnuplotInstance::getInstance(""));
+			g_Mutex.lock();
+			gp << g_Commands.takeAt(0);
+			g_Mutex.unlock();
+		}
+	}
+	QString result;
+	emit resultReady(result);
+}
+*/

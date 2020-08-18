@@ -5,6 +5,7 @@ project(plotDemo)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
+set(CMAKE_DEBUG_POSTFIX _d)
 
 if(CMAKE_VERSION VERSION_LESS "3.7.0")
     set(CMAKE_INCLUDE_CURRENT_DIR ON)
@@ -21,6 +22,7 @@ add_executable(plotDemo
 	mainWindow.cpp
 	mainWindow.ui
 )
+
 
 target_link_libraries(plotDemo plotView Qt5::Core Qt5::Gui Qt5::Widgets)
 

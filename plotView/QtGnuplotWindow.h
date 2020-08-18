@@ -46,7 +46,8 @@
 
 #include "QtGnuplotEvent.h"
 #include "QtGnuplotInstance.h"
-
+#include "export.h"
+#include <QTimer>
 #include <QMainWindow>
 
 /* I had to add these in order to link against qt5 rather than qt4 */
@@ -60,7 +61,7 @@ class QToolBar;
 class QtGnuplotWidget;
 class Ui_settingsDialog;
 
-class QtGnuplotWindow : public QMainWindow, public QtGnuplotEventReceiver
+class PLOTVIEW_EXPORT QtGnuplotWindow : public QMainWindow, public QtGnuplotEventReceiver
 {
 Q_OBJECT
 
@@ -85,7 +86,7 @@ private slots:
 	void exportToSvg();
 	void showSettingsDialog();
 	void settingsSelectBackgroundColor();
-
+	void onTimer();
 private:
 	void createAction(const QString& name, int key, const QString& icon);
 	void loadSettings();
@@ -104,6 +105,8 @@ private:
 	QColor m_chosenBackgroundColor;
 	quint32 m_pid;
 	QtGnuplotInstance gp;
+	QTimer m_timer;
+	bool sinTest;
 };
 
 #endif // QTGNUPLOTWINDOW_H

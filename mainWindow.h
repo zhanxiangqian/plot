@@ -13,10 +13,10 @@ class DemoWindow : public QMainWindow
 public:
 	DemoWindow();
 	~DemoWindow();
-
+	void testPlot();
 private slots:
 	void onOpen();
-
+	void onPlotAction();
 private:
 	Ui::MainWindow ui;
 	QtGnuplotWindow* m_centralWidget;

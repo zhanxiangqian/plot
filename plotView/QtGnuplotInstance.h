@@ -45,10 +45,10 @@
 #define QTGNUPLOTINSTANCE_H
 
 #include <QtCore>
-
+#include "export.h"
 class QtGnuplotWidget;
 
-class QtGnuplotInstance : public QObject
+class PLOTVIEW_EXPORT QtGnuplotInstance : public QObject
 {
 	Q_OBJECT
 

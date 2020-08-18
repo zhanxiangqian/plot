@@ -49,7 +49,7 @@
 #include "QtGnuplotWindow.h"
 #include "QtGnuplotWidget.h"
 #include "QtGnuplotEvent.h"
-
+#include "QTimer"
 extern "C" {
 #include "mousecmn.h"
 }
@@ -124,7 +124,8 @@ QtGnuplotWindow::QtGnuplotWindow(int id, QtGnuplotEventHandler* eventHandler, QW
 	createAction(tr("Next zoom")    , 'n', ":/images/zoomNext");
 	createAction(tr("Autoscale")    , 'a', ":/images/autoscale");
 	m_toolBar->addAction(settingsAction);
-
+	//m_timer.setInterval(500);
+	//connect(&m_timer, &QTimer::timeout, this, &QtGnuplotWindow::onTimer);
 	loadSettings();
 }
 
@@ -314,7 +315,26 @@ void QtGnuplotWindow::testPlot()
 {
 	gp.setWidget(m_widget);
 	gp << "plot sin(x)\n";
+	sinTest = true;
+	//m_timer.start();
 }
+
+void QtGnuplotWindow::onTimer()
+{
+	if (sinTest)
+	{
+		//gp << "clear\n";
+		gp << "plot sin(x) with points\n";
+		sinTest = false;
+	}
+	else
+	{
+		//gp << "clear\n";
+		gp << "plot cos(x) with lines\n";
+		sinTest = true;
+	}
+}
+
 
 void QtGnuplotWindow::keyPressEvent(QKeyEvent* event)
 {

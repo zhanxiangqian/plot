@@ -105,6 +105,7 @@ QtGnuplotWidget* QtGnuplotInstance::widget()
 void QtGnuplotInstance::gnuplotDataReady()
 {
 	QByteArray result = m_gnuplot.readAllStandardOutput();
+	qDebug() << result;
 	emit(gnuplotOutput(result.constData()));
 }
 

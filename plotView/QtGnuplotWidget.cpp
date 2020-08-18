@@ -98,9 +98,9 @@ void QtGnuplotWidget::init()
 	layout->addWidget(m_view);
 	setLayout(layout);
 	setViewMatrix();
-	QTimer *timer = new QTimer(this);
-	connect(timer, SIGNAL(timeout()), this, SLOT(repaint()));
-	timer->start(500);
+	//QTimer *timer = new QTimer(this);
+	//connect(timer, SIGNAL(timeout()), this, SLOT(repaint()));
+	//timer->start(500);
 	m_statusLabel = new QLabel(m_view->viewport());
 	m_statusLabel->setStyleSheet("QLabel { background-color :  rgba(230, 212, 166, 150) }");
 	m_statusLabel->setMargin(1);
@@ -136,7 +136,7 @@ void QtGnuplotWidget::setViewMatrix()
 
 void QtGnuplotWidget::processEvent(QtGnuplotEventType type, QDataStream& in)
 {
-	if (type == GETitle)
+	/*if (type == GETitle)
 	{
 		QString title;
 		in >> title;
@@ -169,7 +169,7 @@ void QtGnuplotWidget::processEvent(QtGnuplotEventType type, QDataStream& in)
 		quint32 m_pid;
 		in >> m_pid;
 	}
-	else
+	else*/
 	{
 
 
@@ -286,6 +286,7 @@ void QtGnuplotWidget::resizeEvent(QResizeEvent* event)
 	QWidget::resizeEvent(event);
 
 }
+
 
 QPainter::RenderHints QtGnuplotWidget::renderHints() const
 {
